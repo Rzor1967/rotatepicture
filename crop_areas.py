@@ -106,13 +106,25 @@ def main(source_path, dest_path):
             full_path = os.path.join(source_path, f)
             erota_alueet(full_path, dest_path)
             millisekunnit = int(time.time() * 1000)
-            os.rename(full_path, os.path.join(source_path+"/done", str(millisekunnit) + "_" + f))
+            os.rename(full_path, os.path.join(source_path, "backup", str(millisekunnit) + "_" + f))
         print("Odota uusia kuvia...")
         time.sleep(5)  # Odota 5 sekuntia ennen seuraavaa tarkistusta
 
 if __name__ == "__main__":
-    source_path = "C:/Users/OMISTAJA/Pictures/Crop"
-    dest_path = "C:/Users/OMISTAJA/Pictures/Scan/1"
+
+    # Ohjelma erottaa mustaa taustaa vasten skannatut pikkukuvat omiksi 
+    # kuvikseen, kääntää se suoraan ja tallentaa ne ready-kansioon.
+    #
+    # Ohjelma käyttö: Kopioi crop_areas.py kuvakansioon ja aja
+    # Ohjelma tekee backup-kansion kuvatiedostojen varmuuskopioille 
+    # ja ready-kansion valmiille kuville.
+
+    from pathlib import Path
+
+    Path("backup").mkdir(parents=True, exist_ok=True)
+    Path("ready").mkdir(parents=True, exist_ok=True)
+    source_path = "."
+    dest_path = "ready"
     main(source_path, dest_path)
     
 
